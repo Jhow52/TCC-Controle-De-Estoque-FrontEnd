@@ -1,0 +1,22 @@
+<div class="topbar"><h2>Sistema de Gestão de Estoque</h2></div>
+<div class="page-content">
+  <div class="page-title">Gerenciar Usuários</div>
+  <div class="alert alert-success" *ngIf="success">{{ success }}</div>
+  <div class="alert alert-error" *ngIf="error">{{ error }}</div>
+  <div class="table-card">
+    <table>
+      <thead><tr><th>#</th><th>Nome</th><th>Email</th><th>Perfil</th><th>Ações</th></tr></thead>
+      <tbody>
+        <tr *ngFor="let u of users">
+          <td>{{ u.id }}</td>
+          <td>{{ u.name }}</td>
+          <td>{{ u.email }}</td>
+          <td><span class="badge" [class]="isAdminUser(u) ? 'badge-blue' : 'badge-green'">{{ isAdminUser(u) ? 'ADMIN' : 'USER' }}</span></td>
+          <td>
+            <button class="btn btn-secondary btn-sm" *ngIf="!isAdminUser(u)" (click)="promote(u.id)">Promover para Admin</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

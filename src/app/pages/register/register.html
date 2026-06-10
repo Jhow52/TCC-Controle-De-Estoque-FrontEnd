@@ -1,0 +1,25 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div style="font-size:32px;margin-bottom:12px">🏭</div>
+    <div class="auth-title">Criar conta</div>
+    <div class="auth-sub">Preencha os dados para se cadastrar</div>
+    <div class="alert alert-error" *ngIf="error">{{ error }}</div>
+    <div class="alert alert-success" *ngIf="success">{{ success }}</div>
+    <div class="form-group">
+      <label>Nome</label>
+      <input class="form-control" [(ngModel)]="name" placeholder="Seu nome completo" />
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input class="form-control" type="email" [(ngModel)]="email" placeholder="seu@email.com" />
+    </div>
+    <div class="form-group">
+      <label>Senha</label>
+      <input class="form-control" type="password" [(ngModel)]="password" placeholder="Mínimo 6 caracteres" />
+    </div>
+    <button class="btn btn-primary" style="width:100%" (click)="submit()" [disabled]="loading">
+      {{ loading ? 'Criando...' : 'Criar conta' }}
+    </button>
+    <div class="auth-link">Já tem conta? <a routerLink="/login">Entrar</a></div>
+  </div>
+</div>

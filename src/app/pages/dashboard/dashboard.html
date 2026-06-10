@@ -1,0 +1,56 @@
+<div class="topbar">
+  <h2>Sistema de Gestão de Estoque</h2>
+  <span class="topbar-date">{{ today }}</span>
+</div>
+<div class="page-content">
+  <div class="page-title">Dashboard</div>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-label">Total de Produtos</div>
+      <div class="card-value" style="color:#2563eb">{{ totalProducts }}</div>
+      <div class="card-sub">itens cadastrados</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Estoque Baixo</div>
+      <div class="card-value" style="color:#ea580c">{{ lowStockProducts.length }}</div>
+      <div class="card-sub">Produtos com estoque crítico</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Movimentações</div>
+      <div class="card-value" style="color:#16a34a">{{ totalMovements }}</div>
+      <div class="card-sub">Total de registros</div>
+    </div>
+  </div>
+
+  <div class="table-card" *ngIf="lowStockProducts.length > 0">
+    <h3>⚠️ Produtos com Estoque Baixo</h3>
+    <div *ngFor="let p of lowStockProducts" class="low-stock-item">
+      <div>
+        <div class="low-stock-name">{{ p.name }}</div>
+        <div class="low-stock-supplier">Categoria: {{ p.categoryName }}</div>
+      </div>
+      <div class="low-stock-qty">
+        <small>Quantidade atual</small>
+        {{ p.quantity }} / {{ p.minStock }}
+      </div>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <h3>🔄 Últimas Movimentações</h3>
+    <table>
+      <thead>
+        <tr><th>Produto</th><th>Tipo</th><th>Quantidade</th><th>Data</th></tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let m of movements">
+          <td>{{ m.productName }}</td>
+          <td><span class="badge" [class]="m.type === 'ENTRADA' ? 'badge-green' : 'badge-red'">{{ m.type }}</span></td>
+          <td>{{ m.quantity }}</td>
+          <td>{{ m.notes}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
