@@ -8,13 +8,15 @@
   <div class="alert alert-error" *ngIf="error">{{ error }}</div>
 
   <div class="table-card">
-    <div class="search-bar">
-      <input class="search-input" [(ngModel)]="search" (ngModelChange)="applyFilter()" placeholder="Buscar produto por nome..." />
+    <div class="search-bar" style="gap:8px">
+      <input class="search-input" [(ngModel)]="searchNome" (ngModelChange)="buscarPorNome()" placeholder="Buscar por nome..." style="flex:2" />
+      <input class="search-input" [(ngModel)]="searchId" (ngModelChange)="buscarPorId()" placeholder="Buscar por ID..." type="number" style="flex:1" />
     </div>
     <table>
-      <thead><tr><th>Produto</th><th>Categoria</th><th>Preço</th><th>Quantidade</th><th>Status</th><th>Ações</th></tr></thead>
+      <thead><tr><th>ID</th><th>Produto</th><th>Categoria</th><th>Preço</th><th>Quantidade</th><th>Status</th><th>Ações</th></tr></thead>
       <tbody>
         <tr *ngFor="let p of filtered">
+          <td>{{ p.id }}</td>
           <td><strong>{{ p.name }}</strong><br><small style="color:#9ca3af">{{ p.description }}</small></td>
           <td>{{ p.categoryName }}</td>
           <td>{{ p.price | currency:'BRL' }}</td>
@@ -36,28 +38,50 @@
       <h3>{{ editId ? 'Editar' : 'Cadastrar' }} Produto</h3>
       <button class="btn-icon" (click)="showModal=false">✕</button>
     </div>
+
+    <div class="alert alert-error" *ngIf="error">{{ error }}</div>
+
     <div class="form-row">
       <div class="form-group">
         <label>Nome do Produto</label>
-        <input class="form-control" [(ngModel)]="form.name" placeholder="Digite o nome" />
+        <input class="form-control" [class.is-invalid]="fieldErrors['name']" [(ngModel)]="form.name" placeholder="Digite o nome" />
+        <div class="field-error" *ngIf="fieldErrors['name']">{{ fieldErrors['name'] }}</div>
       </div>
       <div class="form-group">
         <label>Categoria</label>
-        <select class="form-control" [(ngModel)]="form.categoryName">
+        <select class="form-control" [class.is-invalid]="fieldErrors['categoryName']" [(ngModel)]="form.categoryName">
           <option value="">Selecione uma categoria</option>
           <option *ngFor="let c of categories" [value]="c.name">{{ c.name }}</option>
         </select>
+        <div class="field-error" *ngIf="fieldErrors['categoryName']">{{ fieldErrors['categoryName'] }}</div>
       </div>
     </div>
+
     <div class="form-group">
       <label>Descrição</label>
-      <input class="form-control" [(ngModel)]="form.description" placeholder="Descrição do produto" />
+      <input class="form-control" [class.is-invalid]="fieldErrors['description']" [(ngModel)]="form.description" placeholder="Descrição do produto" />
+      <div class="field-error" *ngIf="fieldErrors['description']">{{ fieldErrors['description'] }}</div>
     </div>
+
     <div class="form-row">
-      <div class="form-group"><label>Preço (R$)</label><input class="form-control" type="number" [(ngModel)]="form.price" /></div>
-      <div class="form-group"><label>Quantidade</label><input class="form-control" type="number" [(ngModel)]="form.quantity" /></div>
+      <div class="form-group">
+        <label>Preço (R$)</label>
+        <input class="form-control" [class.is-invalid]="fieldErrors['price']" type="number" [(ngModel)]="form.price" />
+        <div class="field-error" *ngIf="fieldErrors['price']">{{ fieldErrors['price'] }}</div>
+      </div>
+      <div class="form-group">
+        <label>Quantidade</label>
+        <input class="form-control" [class.is-invalid]="fieldErrors['quantity']" type="number" [(ngModel)]="form.quantity" />
+        <div class="field-error" *ngIf="fieldErrors['quantity']">{{ fieldErrors['quantity'] }}</div>
+      </div>
     </div>
-    <div class="form-group"><label>Estoque Mínimo</label><input class="form-control" type="number" [(ngModel)]="form.minStock" /></div>
+
+    <div class="form-group">
+      <label>Estoque Mínimo</label>
+      <input class="form-control" [class.is-invalid]="fieldErrors['minStock']" type="number" [(ngModel)]="form.minStock" />
+      <div class="field-error" *ngIf="fieldErrors['minStock']">{{ fieldErrors['minStock'] }}</div>
+    </div>
+
     <div class="modal-footer">
       <button class="btn btn-secondary" (click)="showModal=false">Cancelar</button>
       <button class="btn btn-primary" (click)="save()">{{ editId ? 'Salvar' : 'Cadastrar' }}</button>

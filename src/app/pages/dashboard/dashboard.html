@@ -46,7 +46,7 @@
       <tbody>
         <tr *ngFor="let m of movements">
           <td>{{ m.productName }}</td>
-          <td><span class="badge" [class]="m.type === 'ENTRADA' ? 'badge-green' : 'badge-red'">{{ m.type }}</span></td>
+          <td><span class="badge" [class]="m.movementType === 'IN' ? 'badge-green' : 'badge-red'">{{ m.movementType === 'IN' ? 'ENTRADA' : 'SAIDA' }}</span></td>
           <td>{{ m.quantity }}</td>
           <td>{{ m.notes}}</td>
         </tr>

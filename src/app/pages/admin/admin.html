@@ -3,7 +3,12 @@
   <div class="page-title">Gerenciar Usuários</div>
   <div class="alert alert-success" *ngIf="success">{{ success }}</div>
   <div class="alert alert-error" *ngIf="error">{{ error }}</div>
+
   <div class="table-card">
+    <div class="search-bar">
+      <input class="search-input" [(ngModel)]="searchId" (ngModelChange)="buscarPorId()" placeholder="Buscar por ID..." type="number" style="flex:1;max-width:200px" />
+      <button class="btn btn-secondary btn-sm" (click)="searchId=''; load()">Limpar</button>
+    </div>
     <table>
       <thead><tr><th>#</th><th>Nome</th><th>Email</th><th>Perfil</th><th>Ações</th></tr></thead>
       <tbody>
@@ -12,8 +17,9 @@
           <td>{{ u.name }}</td>
           <td>{{ u.email }}</td>
           <td><span class="badge" [class]="isAdminUser(u) ? 'badge-blue' : 'badge-green'">{{ isAdminUser(u) ? 'ADMIN' : 'USER' }}</span></td>
-          <td>
+          <td style="display:flex;gap:8px;align-items:center">
             <button class="btn btn-secondary btn-sm" *ngIf="!isAdminUser(u)" (click)="promote(u.id)">Promover para Admin</button>
+            <button class="btn btn-danger btn-sm" *ngIf="isAdminUser(u)" (click)="removeAdmin(u.id)">Remover Admin</button>
           </td>
         </tr>
       </tbody>

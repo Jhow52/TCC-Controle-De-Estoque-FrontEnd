@@ -26,8 +26,13 @@ export interface Inventory {
 }
 
 export interface StockMovement {
-  id: number; productName: string; productId: number;
-  type: 'ENTRADA' | 'SAIDA'; quantity: number; notes: string;
+  id: number;
+  productName: string;
+  quantity: number;
+  movementType: 'IN' | 'OUT'; // ← era "type", e os valores são IN/OUT
+  currentStock: number;
+  date: string;
+  notes: string;
 }
 export interface StockMovementRequest {
   productId: number;

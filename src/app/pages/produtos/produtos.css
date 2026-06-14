@@ -1,0 +1,5 @@
+.form-control.is-invalid { border-color: #dc2626 !important; background: #fef2f2 !important; }
+.field-error { color: #dc2626; font-size: 12px; margin-top: 4px; font-weight: 500; display: flex; align-items: center; gap: 4px; }
+.field-error::before { content: "⚠"; font-size: 11px; }
+.form-group { margin-bottom: 14px; }
+.form-group:has(.field-error) { margin-bottom: 6px; }

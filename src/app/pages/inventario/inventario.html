@@ -1,13 +1,24 @@
 <div class="topbar"><h2>Sistema de Gestão de Estoque</h2></div>
 <div class="page-content">
   <div class="page-title">Inventário</div>
+  <div class="alert alert-error" *ngIf="error">{{ error }}</div>
+
   <div class="cards-grid" style="grid-template-columns:repeat(2,1fr)">
-    <div class="card"><div class="card-label">Total de Itens</div><div class="card-value" style="color:#2563eb">{{ inventory.length }}</div></div>
+    <div class="card"><div class="card-label">Total de Itens</div><div class="card-value" style="color:#2563eb">{{ allInventory.length }}</div></div>
     <div class="card"><div class="card-label">Estoque Baixo</div><div class="card-value" style="color:#ea580c">{{ lowCount }}</div></div>
   </div>
+
   <div class="table-card">
+    <div class="search-bar" style="flex-wrap:wrap;gap:8px">
+      <input class="search-input" [(ngModel)]="searchNome" (ngModelChange)="buscarPorNome()" placeholder="Buscar por nome do produto..." style="flex:2" />
+      <input class="search-input" [(ngModel)]="searchCategoria" (ngModelChange)="buscarPorCategoria()" placeholder="Buscar por categoria..." style="flex:2" />
+      <label style="display:flex;align-items:center;gap:6px;font-size:14px;cursor:pointer">
+        <input type="checkbox" [(ngModel)]="filtroEstoqueBaixo" (ngModelChange)="verEstoqueBaixo()" />
+        Só estoque baixo
+      </label>
+    </div>
     <table>
-      <thead><tr><th>Produto</th><th>Categoria</th><th>Quantidade</th><th>Mínimo</th><th>Status</th><th>Última Atualização</th></tr></thead>
+      <thead><tr><th>Produto</th><th>Categoria</th><th>Quantidade</th><th>Mínimo</th><th>Status</th></tr></thead>
       <tbody>
         <tr *ngFor="let i of inventory">
           <td><strong>{{ i.productName }}</strong></td>
@@ -15,7 +26,6 @@
           <td>{{ i.quantity }}</td>
           <td>{{ i.minStock }}</td>
           <td><span [class]="i.lowStock ? 'status-low' : 'status-normal'">{{ i.lowStock ? 'Estoque Baixo' : 'Normal' }}</span></td>
-          <td>{{ i.date | date:'dd/MM/yyyy HH:mm' }}</td>
         </tr>
       </tbody>
     </table>
